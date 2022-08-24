@@ -100,6 +100,19 @@
 						
 						<p>大家有任何想問的營養小知識都能隨時私訊粉專或Line@諮詢由營養師為您解答喔！</p>
 						
+						<div>
+							<div id="comment-container"></div>
+							<!--我要留言-->
+							<div style="width: 100%;min-height:100px;box-shadow: rgb(0 0 0 / 12%) 0px 2px 8px;margin: 10px 0px;position: relative;">
+								<div style="display:flex;align-items: center;">
+									<div style="width: 20px;height: 20px;border-radius: 50%;background-color: gray;margin:0px 5px;"></div>
+									<input  id="name" style="border:none;background-color:white;outline: none;" placeholder="name" style="-webkit-appearance: none;" type="text" name="" id="">
+								</div>
+								<textarea id="textarea" style="width: 100%;resize:none;border:none;" name="textarea" rows="3" placeholder="我要留言"></textarea>
+								<button   id="send-coment-btn" style="height:30px;width:100px;border-radius:5px;border:dotted 1px black;line-height: 30px;position: absolute;bottom: 0px;right: 0px;opacity: 1;">送出</button>
+							</div>
+						</div>
+						
 						<p><br />
 						🌵看更多營養小知識：<a href="https://www.instagram.com/dietitian_yuuu/">www.instagram.com/dietitian_yuuu/</a></p>
 						
@@ -125,6 +138,70 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+				$(document).ready(function () {
+				  var str = [];
+				  var serial_number = window.location.pathname
+					.substring(8)
+					.replace(".html", "");
+				  console.log(serial_number);
+		  
+				  $.ajax({
+					type: "Get",
+					url: `https://einfit-api.kathdata.com/comments?serial_number="${serial_number}"`,
+		  
+					headers: { "cache-control": "no-cache" },
+					success: function (response) {
+					  console.log(response);
+					  //return response;
+					  //console.log(response.data.length);
+					  response.data.forEach((element) => console.log(element));
+		  
+					  for (var i = 0; i < response.data.length; i++) {
+						str.push(
+						  '<div style="display:flex;align-items: center;margin-top: 5px;">' +
+							'<div style="width: 20px;height: 20px;border-radius: 50%;background-color: pink;margin-right:5px;"></div>' +
+							'<div class="bn b bo bp gi">' +
+							response.data[i].user_name +
+							"</div>" +
+							'<div style="font-size: 8px;margin-left: 15px;">' +
+							new Date(response.data[i].created_at).toLocaleDateString() +
+							"</div>" +
+							"</div>" +
+							'<div style="padding:2px 5px;border-bottom: 1px dashed gray;">' +
+							response.data[i].message +
+							"</div>"
+						);
+					  }
+		  
+					  $("#comment-container").html(str.join(""));
+					},
+				  });
+		  
+				  $("#send-coment-btn").click(function () {
+					if ($("#textarea").val() != "" && $("#name").val() != "") {
+					  $("#errormsg").css("opacity", "0");
+					  $.ajax({
+						type: "POST",
+						url: "https://einfit-api.kathdata.com/comments",
+						headers: { "Content-Type": "application/x-www-form-urlencoded" },
+						data: {
+						  serial_number: serial_number,
+						  user_name: $("#name").val(),
+						  message: $("#textarea").val(),
+						},
+						success: function (response) {
+						  console.log(response);
+						  location.reload();
+						  //return response;
+						},
+					  });
+					} else {
+					  $("#errormsg").css("opacity", "1");
+					}
+				  });
+				});
+			  </script>
 
 	</body>
 </html>

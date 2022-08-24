@@ -127,6 +127,70 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+				$(document).ready(function () {
+				  var str = [];
+				  var serial_number = window.location.pathname
+					.substring(8)
+					.replace(".html", "");
+				  console.log(serial_number);
+		  
+				  $.ajax({
+					type: "Get",
+					url: `https://einfit-api.kathdata.com/comments?serial_number="${serial_number}"`,
+		  
+					headers: { "cache-control": "no-cache" },
+					success: function (response) {
+					  console.log(response);
+					  //return response;
+					  //console.log(response.data.length);
+					  response.data.forEach((element) => console.log(element));
+		  
+					  for (var i = 0; i < response.data.length; i++) {
+						str.push(
+						  '<div style="display:flex;align-items: center;margin-top: 5px;">' +
+							'<div style="width: 20px;height: 20px;border-radius: 50%;background-color: pink;margin-right:5px;"></div>' +
+							'<div class="bn b bo bp gi">' +
+							response.data[i].user_name +
+							"</div>" +
+							'<div style="font-size: 8px;margin-left: 15px;">' +
+							new Date(response.data[i].created_at).toLocaleDateString() +
+							"</div>" +
+							"</div>" +
+							'<div style="padding:2px 5px;border-bottom: 1px dashed gray;">' +
+							response.data[i].message +
+							"</div>"
+						);
+					  }
+		  
+					  $("#comment-container").html(str.join(""));
+					},
+				  });
+		  
+				  $("#send-coment-btn").click(function () {
+					if ($("#textarea").val() != "" && $("#name").val() != "") {
+					  $("#errormsg").css("opacity", "0");
+					  $.ajax({
+						type: "POST",
+						url: "https://einfit-api.kathdata.com/comments",
+						headers: { "Content-Type": "application/x-www-form-urlencoded" },
+						data: {
+						  serial_number: serial_number,
+						  user_name: $("#name").val(),
+						  message: $("#textarea").val(),
+						},
+						success: function (response) {
+						  console.log(response);
+						  location.reload();
+						  //return response;
+						},
+					  });
+					} else {
+					  $("#errormsg").css("opacity", "1");
+					}
+				  });
+				});
+			  </script>
 
 	</body>
 </html>
