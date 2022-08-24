@@ -294,11 +294,14 @@
                $(document).ready(function(){
 
 				var str = [];
-
+				var serial_number = window.location.pathname.substring(8).replace(".html","");
+				console.log(serial_number);
+                
 				$.ajax({
                           type: 'Get',
-                          url: "http://54.255.250.164:3000/comments?serial_number=1-0-0730",
-                          headers: {'cache-control': 'no-cache'},
+                          url: `http://54.255.250.164:3000/comments?serial_number="${serial_number}"`,
+						  
+                          headers: {'cache-control': 'no-cache'}, 
                           success: function (response) {
                               console.log(response);
                               //return response;
@@ -329,7 +332,7 @@
                           url: "http://54.255.250.164:3000/comments",
                           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                           data:  {
-							serial_number: "1-0-0730",
+							serial_number: serial_number,
 							user_name: $("#name").val(),
 							message: $("#textarea").val()
 						  },
