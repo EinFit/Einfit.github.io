@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Future Imperfect by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <!-- Matomo -->
 <script>
 	var _paq = window._paq = window._paq || [];
@@ -20,55 +15,6 @@
 	})();
 </script>
 <!-- End Matomo Code -->
-	<!-- <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script> -->
-
-   <!-- firebase -->
-   <!-- <script type="module">
-	// Import the functions you need from the SDKs you need
-	import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
-	import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-analytics.js";
-	import { auth } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js'
-	import { firestore } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js";
-	// TODO: Add SDKs for Firebase products that you want to use
-	// https://firebase.google.com/docs/web/setup#available-libraries
-  
-	// Your web app's Firebase configuration
-	// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-	const firebaseConfig = {
-	  apiKey: "AIzaSyB6OTAKZNWDt64bQ5Z0r8PGrwHUyaXNay8",
-	  authDomain: "blog-a4457.firebaseapp.com",
-	  projectId: "blog-a4457",
-	  storageBucket: "blog-a4457.appspot.com",
-	  messagingSenderId: "67740018265",
-	  appId: "1:67740018265:web:76933f07b86152955ef348",
-	  measurementId: "G-JLPK81V7M8"
-	};
-  
-	// Initialize Firebase
-	const app = initializeApp(firebaseConfig);
-	const analytics = getAnalytics(app);
-	firestore(app);
-
-	// const firebase = require("firebase");
-
-	// firebase.initializeApp({
-    //   projectId: 'blog-a4457'
-    // });
-
-    // var db = firebase.firestore(app);
-	// var ref = db.collection('comments-test').doc('single-1-0-0730');
-
-    // ref.set({
-    //   name: "王先生",
-    //   commtet: "可見肥胖與慢性病確實是習習相關的影響，因此趁早在疾病發生前期就先注意到代謝症候群的狀況，更能及早預防及避免惡化至慢性病的情形，遠離死亡率！",
-    //   date: new Date().toISOString().split('T')[0]
-    // }).then(() => {
-//   console.log('set data successful');
-// });
-	
-  </script> -->
-  <!-- End firebase -->
 <html>
 	<head>
 		<title>永續飲食 Sustainable Diet</title>
@@ -305,8 +251,6 @@
                           headers: {'cache-control': 'no-cache'}, 
                           success: function (response) {
                               console.log(response);
-                              //return response;
-							  //console.log(response.data.length);
 							  response.data.forEach(element => console.log(element));
 
 							  for(var i=0; i<response.data.length; i++){
@@ -340,7 +284,6 @@
                           success: function (response) {
                               console.log(response);
 							  location.reload();
-                              //return response;
                           }
 		                })
 
